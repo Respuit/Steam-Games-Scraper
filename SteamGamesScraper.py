@@ -321,12 +321,12 @@ def Scraper(dataset, notreleased, discarted, args, appIDs = None):
           Log(INFO, f'List with {len(apps)} games loaded')
     else:
       Log(INFO, 'Requesting list of games from Steam')
-      response = DoRequest('http://api.steampowered.com/ISteamApps/GetAppList/v2/')
+      response = DoRequest('https://api.steampowered.com/IStoreQueryService/Query/v1/?input_json={\"query\":{\"start\":\"8000\",\"count\":\"5000\",\"sort\":\"1\",\"filters\":{\"tagids_must_match\":[{\"tagids\":[\"21978\"]}]},\"type_filters\":{\"exclude_bundles\":true,\"include_games\":true}},\"context\":{\"language\":\"english\",\"country_code\":\"US\"},\"data_request\":{\"include_basic_info\":true}}')
       if response:
         time.sleep(args.sleep)
         data = response.json()
-        apps = data['applist']['apps']
-        apps = [str(x["appid"]) for x in apps]
+        apps = data['response']['ids']
+        apps = [str(x["appid"]) for x in apps if "appid" in x]
         with open(APPLIST_FILE, 'w', encoding='utf-8') as fout:
           fout.seek(0)
           fout.write(json.dumps(apps, indent=4, ensure_ascii=False))
