@@ -1,3 +1,6 @@
+Fork that modify the url to fetch only the steam vr games. 
+Still have to make it easier to use and able to select the block to retrive because the api is limited to a 1000 rows at a time
+
 <p align="center"><img src="images/banner.png"/></p>
 <br>
 
